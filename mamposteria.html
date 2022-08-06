@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <script defer src="mamposteriaConRevoques.js"></script>
     <title>Calculadora de Obra</title>
 </head>
 <body>
@@ -23,18 +24,30 @@
         </div>
         <hr>
     </header>
+    <main>
+        <form>
+            <p>
+                <input type="text" id="entrada-piso" placeholder="Piso">
+            </p>
+            <p>
+                <input type="text" id="entrada-largo" placeholder="Largo"> <i> m</i>
+                <input type="text" id="entrada-alto" placeholder="Alto"> <i> m</i>
+            </p>
+        </form>
+        <button id="btn-calcular" onclick='materialesMuroM2("LH", "12")'>Calcular</button>
+        <button id="btn-agregar" onclick="">Agregar</button>
+        <button id="btn-limpiar" onclick="limpiarResultados()">Borrar</button>
+        <div>
+            Ladrillos: <span id="materialesLadrillos"></span> unidades</div>
+        <div>
+            Cemento Portland: <span id="materialesCemento"></span> bolsas 50kg</div>
+        <div>
+            Cal Hidraulica: <span id="materialesCalH"></span> bolsas 30kg</div>
+        <div>
+            Arena: <span id="materialesArena"></span> m3</div>
+    </main>
 
-    <div id="contenidos">
-        <main id="contenido-central">
 
-        </main>
-        <aside id="contenido-lateral">
-
-        </aside>
-    </div>
-    
     <footer id="pie-pagina"></footer>
-
-    
 </body>
 </html>
