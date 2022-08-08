@@ -52,3 +52,11 @@ h1 {
     height: 60px;
     width: 100%;
 }
+
+#resultados{
+    display: none;
+}
+
+#resultadosRetak{
+    display: none;
+}

@@ -1,3 +1,35 @@
+// Selector de Mampuesto para el calculo
+var mampuestoCalculo = "";
+
+function seleccionarMampuesto (mampuestoElegido) {
+    var mampuestos = document.getElementsByName("mampuesto");
+    var eleccion = document.getElementById("mampuestoElegido");
+    var eleccionMortero = document.getElementById("morteroElegido");
+    for (let i of mampuestos){
+        if (i.checked) {
+            eleccion.innerHTML = mampuestoElegido;
+            mampuestoCalculo = i.value;
+        }
+    }
+    switch (mampuestoElegido) {
+        case 'Ladrillo Comun':
+            eleccionMortero.innerHTML = "MHR 1/2 : 1 : 3  (15cm - panderete)<br> MHR 1/4 : 1 : 3  (30cm)";
+                break;
+        case 'Ladrillo Hueco':
+            eleccionMortero.innerHTML = "MHR 1/2 : 1 : 3";
+                break;
+        case 'Ladrillo Hueco Portante':
+            eleccionMortero.innerHTML = "MHR 1/8 : 1 : 3";
+                break;
+        case 'Bloque de Cemento':
+            eleccionMortero.innerHTML = "MHR 1 : 1 : 6";
+                break;
+        case 'Bloque Retak':
+            eleccionMortero.innerHTML = "Mortero Adhesivo Retak";
+                break;
+    }
+}
+
 // Factor Desperdicio Global
 
 let desperdicio = 5;
@@ -64,15 +96,16 @@ let pesoMampuestos = {
 }
 
 let unidadesComerciales = {
+    "arenaFina": 0.5,
+    "arenaGruesa": 0.5,
+    "cascoteLadrillo": 0.5,
     "cementoPortland" : 50,
     "cementoAlbañileria": 40,
     "calHidraulica": 30,
     "calAerea": 25,
-    "yesoFino": 25,
-    "arenaGruesa": 0.5,
-    "arenaFina": 0.5,
+    "morteroRetak": 30, 
     "piedraPartida": 0.5,
-    "cascoteLadrillo": 0.5
+    "yesoFino": 25,
 }
 
 let ladrilloMacizo = {
@@ -279,47 +312,69 @@ let contrapiso = dosificadorHormigonPobre(0.25, 1, 4, 8);
 
 // Resultados Mamposteria
     
-let resultadoLadrillos = document.getElementById("materialesLadrillos");
-let resultadoCemento = document.getElementById("materialesCemento");
-let resultadoCal = document.getElementById("materialesCalH");
-let resultadoArena = document.getElementById("materialesArena");
+let resultadoLadrillos = document.getElementById("resultados-ladrillos");
+let resultadoCemento = document.getElementById("resultados-cemento");
+let resultadoCal = document.getElementById("resultados-calH");
+let resultadoArena = document.getElementById("resultados-arena");
+let resultadoBloquesRetak = document.getElementById("resultados-bloquesRetak");
+let resultadoMorteroRetak = document.getElementById("resultados-morteroRetak");
 let pisoMuro = document.getElementById("");
 
-function materialesMuroM2 (mampuesto, espesor) {
+
+
+function materialesMuroM2 () {
     let largo = document.getElementById("entrada-largo").value;
     let alto = document.getElementById("entrada-alto").value;
+    let espesor = document.getElementById("entrada-espesor").value;
     let superficie = superficieMuro(largo, alto);
     cemento = NaN;
     calH = NaN;
     arena = NaN;
-    if (mampuesto === "LH") {
-        var materiales = rendimientoMamposteriaRoja(ladrilloHueco[espesor][0], ladrilloHueco[espesor][1], ladrilloHueco[espesor][2], 0, 0.015);
-        var ladrillos = redondearNumeroArriba(materiales[0] * superficie * porcentajeDesperdicio, 0);
-        cemento = redondearNumero(morteroAsientoHuecos[0] * materiales[1] * superficie * porcentajeDesperdicio, 2);
-        calH = redondearNumero(morteroAsientoHuecos[1] * materiales[1] * superficie * porcentajeDesperdicio, 2);
-        arena = redondearNumero(morteroAsientoHuecos[2] * materiales[1] * superficie * porcentajeDesperdicio, 2);
-    } else if (mampuesto === "LHP") {
-        var materiales = rendimientoMamposteriaRoja(ladrilloPortante[espesor][0], ladrilloPortante[espesor][1], ladrilloPortante[espesor][2], 0, 0.01);
-        var ladrillos = redondearNumeroArriba(materiales[0] * superficie * porcentajeDesperdicio, 0);
-        cemento = redondearNumero(morteroAsientoPortantes[0] * materiales[1] * superficie * porcentajeDesperdicio, 2);
-        calH = redondearNumero(morteroAsientoPortantes[1] * materiales[1] * superficie * porcentajeDesperdicio, 2);
-        arena = redondearNumero(morteroAsientoPortantes[2] * materiales[1] * superficie * porcentajeDesperdicio, 2);
-    } 
+    morteroRetak = NaN;
+    if (mampuestoCalculo === "LH" || mampuestoCalculo === "LHP"){
+        if (mampuestoCalculo === "LH") {
+            var materiales = rendimientoMamposteriaRoja(ladrilloHueco[espesor][0], ladrilloHueco[espesor][1], ladrilloHueco[espesor][2], 0, 0.015);
+            var ladrillos = redondearNumeroArriba(materiales[0] * superficie * porcentajeDesperdicio, 0);
+            cemento = redondearNumero(morteroAsientoHuecos[0] * materiales[1] * superficie * porcentajeDesperdicio, 2);
+            calH = redondearNumero(morteroAsientoHuecos[1] * materiales[1] * superficie * porcentajeDesperdicio, 2);
+            arena = redondearNumero(morteroAsientoHuecos[2] * materiales[1] * superficie * porcentajeDesperdicio, 2);
+        } else {
+            var materiales = rendimientoMamposteriaRoja(ladrilloPortante[espesor][0], ladrilloPortante[espesor][1], ladrilloPortante[espesor][2], 0, 0.01);
+            var ladrillos = redondearNumeroArriba(materiales[0] * superficie * porcentajeDesperdicio, 0);
+            cemento = redondearNumero(morteroAsientoPortantes[0] * materiales[1] * superficie * porcentajeDesperdicio, 2);
+            calH = redondearNumero(morteroAsientoPortantes[1] * materiales[1] * superficie * porcentajeDesperdicio, 2);
+            arena = redondearNumero(morteroAsientoPortantes[2] * materiales[1] * superficie * porcentajeDesperdicio, 2);
+        }
+    document.getElementById("resultadosRetak").style.display = "none";
+    document.getElementById("resultados").style.display = "block";
     cemento = redondearNumeroArriba(cemento/unidadesComerciales["cementoPortland"], 0);
     calH = redondearNumeroArriba(calH/unidadesComerciales["calHidraulica"], 0);
     resultadoLadrillos.textContent = ladrillos;
     resultadoCemento.textContent = cemento;
     resultadoCal.textContent = calH;
-    resultadoArena.textContent = arena;
+    resultadoArena.textContent = arena; 
+    return
+    } else if (mampuestoCalculo === "BH") {
+    } else if (mampuestoCalculo === "RK") {
+        var materiales = rendimientoBloquesRetak(superficie, espesor);
+        resultadoBloquesRetak.textContent = materiales[0];
+        resultadoMorteroRetak.textContent = redondearNumeroArriba(materiales[1]/unidadesComerciales["morteroRetak"], 0);
+        document.getElementById("resultados").style.display = "none";
+        document.getElementById("resultadosRetak").style.display = "block";
+        return
+    } else if (mampuestoCalculo === "LC") {
+        document.getElementById("resultadosRetak").style.display = "none";
+    }
 }
 
 
 function limpiarResultados(){
+    document.getElementById("resultados").style.display = "none";
+    document.getElementById("resultadosRetak").style.display = "none";
     resultadoLadrillos.textContent = "";
     resultadoCemento.textContent = "";
     resultadoCal.textContent = "";
     resultadoArena.textContent = "";
+    resultadoBloquesRetak.textContent = "";
+    resultadoMorteroRetak.textContent = "";
 }
-
-
-

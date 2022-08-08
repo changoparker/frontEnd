@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <script defer src="mamposteriaConRevoques.js"></script>
     <title>Calculadora de Obra</title>
 </head>
+
 <body>
     <header>
         <div id="solapa-sup"><a href="index.html"><h1>Computos y Presupuestos</h1></a></div>
@@ -24,27 +26,62 @@
         </div>
         <hr>
     </header>
+
     <main>
-        <form>
-            <p>
-                <input type="text" id="entrada-piso" placeholder="Piso">
-            </p>
-            <p>
+        <form> 
+                <img src="../img/lc.jpeg" alt="Ladrillo Comun" width="15%" height="200">
+                <input type="radio" onclick="seleccionarMampuesto('Ladrillo Comun')" name="mampuesto" value="LC"> 
+
+                <img src="../img/lh.jpeg" alt="Ladrillo Hueco" width="15%" height="200">
+                <input type="radio" onclick="seleccionarMampuesto('Ladrillo Hueco')" name="mampuesto" value="LH"> 
+
+                <img src="../img/lhp.jpeg" alt="Ladrillo Hueco Portante" width="15%" height="200">
+                <input type="radio" onclick="seleccionarMampuesto('Ladrillo Hueco Portante')" name="mampuesto" value="LHP"> 
+
+                <img src="../img/bh.jpeg" alt="Bloque de Hormigon" width="15%" height="200">
+                <input type="radio" onclick="seleccionarMampuesto('Bloque de Cemento')" name="mampuesto" value="BH"> 
+
+                <img src="../img/rk.jpeg" alt="Retak" width="15%" height="200">
+                <input type="radio" onclick="seleccionarMampuesto('Bloque Retak')" name="mampuesto" value="RK"> 
+
+                <p>Largo</p>
                 <input type="text" id="entrada-largo" placeholder="Largo"> <i> m</i>
+                <p>Alto</p>
                 <input type="text" id="entrada-alto" placeholder="Alto"> <i> m</i>
-            </p>
+                <p>Espesor</p>
+                <input type="text" id="entrada-espesor" placeholder="Espesor"> <i> cm</i>
         </form>
-        <button id="btn-calcular" onclick='materialesMuroM2("LH", "12")'>Calcular</button>
+
+        <p>Mampuesto: <span id="mampuestoElegido"></span></p>
+        <p>Mortero de asiento: <span id="morteroElegido"></span></p>
+    
+        <button id="btn-calcular" onclick='materialesMuroM2()'>Calcular</button>
         <button id="btn-agregar" onclick="">Agregar</button>
         <button id="btn-limpiar" onclick="limpiarResultados()">Borrar</button>
-        <div>
-            Ladrillos: <span id="materialesLadrillos"></span> unidades</div>
-        <div>
-            Cemento Portland: <span id="materialesCemento"></span> bolsas 50kg</div>
-        <div>
-            Cal Hidraulica: <span id="materialesCalH"></span> bolsas 30kg</div>
-        <div>
-            Arena: <span id="materialesArena"></span> m3</div>
+
+        <p>El resultado incluye un 5% extra por desperdicios.</p>
+
+        <div id="resultados">
+            Ladrillos: <span id="resultados-ladrillos"></span> unidades
+            Cemento Portland: <span id="resultados-cemento"></span> bolsas 50kg
+            Cal Hidraulica: <span id="resultados-calH"></span> bolsas 30kg
+            Arena: <span id="resultados-arena"></span> m3
+        </div>
+
+        <div id="resultadosRetak">
+            Bloques: <span id="resultados-bloquesRetak"></span> unidades
+            Mortero: <span id="resultados-morteroRetak"></span> bolsas 30kg
+        </div>
+
+
+
+
+
+
+
+
+
+
     </main>
 
 
